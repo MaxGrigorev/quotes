@@ -1,12 +1,14 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { StatusBar } from "expo-status-bar";
+import React, { ReactElement } from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Provider } from "react-redux";
 
-import useCachedResources from './hooks/useCachedResources';
-import useColorScheme from './hooks/useColorScheme';
-import Navigation from './navigation';
+import { store } from "./redux/store";
+import useCachedResources from "./hooks/useCachedResources";
+import useColorScheme from "./hooks/useColorScheme";
+import Navigation from "./navigation";
 
-export default function App() {
+export default function App(): ReactElement | null {
   const isLoadingComplete = useCachedResources();
   const colorScheme = useColorScheme();
 
@@ -15,8 +17,10 @@ export default function App() {
   } else {
     return (
       <SafeAreaProvider>
-        <Navigation colorScheme={colorScheme} />
-        <StatusBar />
+        <Provider store={store}>
+          <Navigation colorScheme={colorScheme} />
+          <StatusBar />
+        </Provider>
       </SafeAreaProvider>
     );
   }
