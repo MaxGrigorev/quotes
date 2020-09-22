@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
 
-import { example } from "./example";
+import { quotes } from "./quotes";
 
 const rootReducer = combineReducers({
-  example,
+  quotes,
 });
 
 export { rootReducer };
