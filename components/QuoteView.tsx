@@ -4,12 +4,6 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { Text, View } from "./Themed";
 import { Quotes } from "../redux/ducks/quotes/types";
 
-const normalizePercent = (percent: string): string => {
-  if (percent[0] === "-") return percent + " %";
-
-  return;
-};
-
 interface Props {
   quote: Quotes;
 }
@@ -17,27 +11,31 @@ interface Props {
 const QuoteView: FC<Props> = ({ quote }) => {
   const { name, last, highestBid, percentChange } = quote;
 
-  const numberPercentChange = parseFloat(percentChange).toFixed(2);
+  const numberPercentChange = parseFloat(percentChange);
 
   return (
     <TouchableOpacity
-      onPress={() => {}}
       style={{
         flexDirection: "row",
         padding: 8,
-        justifyContent: "space-between",
       }}
     >
-      <Text
-        style={styles.name}
-        lightColor="rgba(0,0,0,0.8)"
-        darkColor="rgba(255,255,255,0.8)"
-      >
-        {name}
-      </Text>
       <View
         style={{
-          flex: 4,
+          flex: 3,
+        }}
+      >
+        <Text
+          style={styles.name}
+          lightColor="rgba(0,0,0,0.8)"
+          darkColor="rgba(255,255,255,0.8)"
+        >
+          {name}
+        </Text>
+      </View>
+      <View
+        style={{
+          flex: 5,
           flexDirection: "row",
           justifyContent: "space-between",
         }}
@@ -62,13 +60,29 @@ const QuoteView: FC<Props> = ({ quote }) => {
             {highestBid}
           </Text>
         </View>
-        <View>
+        <View
+          style={{
+            width: 70,
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor:
+              numberPercentChange > 0
+                ? "rgba(162, 239, 0, 0.4)"
+                : "rgba(255, 0, 0, 0.4)",
+          }}
+        >
           <Text
-            style={styles.getStartedText}
-            lightColor="rgba(0,0,0,0.8)"
+            style={styles.percentChange}
+            lightColor={
+              numberPercentChange > 0
+                ? "rgba(62, 92, 0, 1)"
+                : "rgba(255, 0, 0, 1)"
+            }
             darkColor="rgba(255,255,255,0.8)"
           >
-            {`${numberPercentChange} %`}
+            {`${
+              numberPercentChange >= 0 ? "+" : ""
+            }${numberPercentChange.toFixed(2)} %`}
           </Text>
         </View>
       </View>
@@ -81,7 +95,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   name: {
-    flex: 3,
     fontSize: 17,
   },
   last: {
@@ -90,10 +103,8 @@ const styles = StyleSheet.create({
   highestBid: {
     fontSize: 10,
   },
-  getStartedText: {
-    fontSize: 17,
-    lineHeight: 24,
-    textAlign: "center",
+  percentChange: {
+    fontSize: 15,
   },
 });
 
