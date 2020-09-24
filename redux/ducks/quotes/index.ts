@@ -92,7 +92,9 @@ export const setError = (error: boolean): SetErrorAction_Payload => {
   };
 };
 
-export const getQuotes = () => async (dispatch: Dispatch) => {
+export const getQuotes = () => async (
+  dispatch: Dispatch
+): Promise<Quotes[]> => {
   dispatch(setloading(true));
   return fetchQuotes()
     .then((data) => {
@@ -103,6 +105,7 @@ export const getQuotes = () => async (dispatch: Dispatch) => {
       return quotes;
     })
     .catch(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (e): Promise<any> => {
         dispatch(setloading(false));
         dispatch(setError(true));

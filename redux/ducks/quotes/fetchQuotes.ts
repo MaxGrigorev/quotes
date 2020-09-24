@@ -8,14 +8,14 @@ export const fetchQuotes = (): Promise<QuotesRequest> => {
     .then((data) => {
       if (data.error) {
         const error = new Error(data.error);
-        // console.log("fetchQuotes error: ", error);
         throw error;
       }
       return data;
     })
     .catch(
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (e): Promise<any> => {
-        // console.log("fetchQuotes error: ", e);
+        console.log("fetchQuotes error: ", e);
         return Promise.reject(e);
       }
     );
