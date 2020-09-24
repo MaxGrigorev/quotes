@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React, { FC, memo } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
 import { Text, View, AnimatedText } from "./Themed";
@@ -8,7 +8,7 @@ interface Props {
   quote: Quotes;
 }
 
-const QuoteView: FC<Props> = ({ quote }) => {
+const QuoteView: FC<Props> = memo(({ quote }) => {
   const { name, last, highestBid, percentChange } = quote;
 
   const numberPercentChange = parseFloat(percentChange);
@@ -88,7 +88,7 @@ const QuoteView: FC<Props> = ({ quote }) => {
       </View>
     </TouchableOpacity>
   );
-};
+});
 const styles = StyleSheet.create({
   wrapper: {
     flex: 1,
