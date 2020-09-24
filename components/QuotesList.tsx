@@ -1,9 +1,9 @@
-import React, { ReactElement, useState, useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { StyleSheet, FlatList, ActivityIndicator } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { useFocusEffect } from "@react-navigation/native";
 
-import { getQuotes } from "../redux/ducks/quotes/index";
+import { getQuotes, getMoreRenderQuotes } from "../redux/ducks/quotes/index";
 import { AppState } from "../redux/ducks";
 import { View } from "./Themed";
 import { Quotes } from "../redux/ducks/quotes/types";
@@ -13,9 +13,9 @@ import QuoteListError from "./QuoteListError";
 import { timeoutRequest } from "../constants";
 
 export default function QuotesList(): ReactElement {
-  const quotes = useSelector((state: AppState) => state.quotes.quotes);
-  const [quotesLocal, setQuotesLocal] = useState(quotes);
-
+  const renderQuotes = useSelector(
+    (state: AppState) => state.quotes.renderQuotes
+  );
   const dispatch = useDispatch();
 
   useFocusEffect(
@@ -33,24 +33,16 @@ export default function QuotesList(): ReactElement {
     dispatch(getQuotes());
   }, []);
 
-  useEffect(() => {
-    setQuotesLocal(() => quotes.slice(0, quotesLocal.length || 15));
-  }, [quotes]);
-
-  const fetchMoreData = (limit: number): void => {
-    setQuotesLocal(() => quotes.slice(0, quotesLocal.length + limit));
-  };
-
   const onEndReached = (): void => {
-    if (quotes.length > 0) {
-      fetchMoreData(15);
+    if (renderQuotes.length > 0) {
+      dispatch(getMoreRenderQuotes());
     }
   };
 
   return (
     <View style={styles.wrapper}>
       <QuoteListError />
-      {quotesLocal.length === 0 && (
+      {renderQuotes.length === 0 && (
         <View
           style={{
             flex: 1,
@@ -62,12 +54,12 @@ export default function QuotesList(): ReactElement {
           <ActivityIndicator size="large" />
         </View>
       )}
-      {quotesLocal.length > 0 && (
+      {renderQuotes.length > 0 && (
         <>
           <QuoteListHeader />
           <FlatList
-            data={quotesLocal}
-            extraData={quotesLocal}
+            data={renderQuotes}
+            extraData={renderQuotes}
             keyExtractor={(item: Quotes, index: number): string =>
               `${item.id} ${index}`
             }

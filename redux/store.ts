@@ -8,6 +8,10 @@ import { reactotronRedux } from "reactotron-redux";
 
 import appMetaInfo from "../app.json";
 
+const composeItems = [];
+
+composeItems.push(applyMiddleware(thunk));
+
 if (__DEV__) {
   const scriptURL = NativeModules.SourceCode.scriptURL;
   const scriptHostname = scriptURL.split("://")[1].split(":")[0];
@@ -23,13 +27,7 @@ if (__DEV__) {
     })
     .use(reactotronRedux())
     .connect();
-}
 
-const composeItems = [];
-
-composeItems.push(applyMiddleware(thunk));
-
-if (__DEV__) {
   composeItems.push(Reactotron.createEnhancer());
 }
 

@@ -13,8 +13,7 @@ export const fetchQuotes = (): Promise<QuotesRequest> => {
       return data;
     })
     .catch(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (e): Promise<any> => {
+      (e): Promise<Error> => {
         console.log("fetchQuotes error: ", e);
         return Promise.reject(e);
       }

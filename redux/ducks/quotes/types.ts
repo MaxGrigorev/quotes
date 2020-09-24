@@ -1,9 +1,3 @@
-type exampleType = {
-  loading: boolean;
-  error: boolean;
-  quotes: Quotes[];
-};
-
 export interface Quote {
   id: number;
   last: string;
@@ -25,4 +19,9 @@ export interface QuotesRequest {
   [name: string]: Quote;
 }
 
-export type State = exampleType;
+export type State = {
+  loading: boolean;
+  error: boolean;
+  quotes: Quotes[];
+  renderQuotes: Quotes[];
+};
