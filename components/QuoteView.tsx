@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 
-import { Text, View } from "./Themed";
+import { Text, View, AnimatedText } from "./Themed";
 import { Quotes } from "../redux/ducks/quotes/types";
 
 interface Props {
@@ -45,13 +45,13 @@ const QuoteView: FC<Props> = ({ quote }) => {
             flexDirection: "column",
           }}
         >
-          <Text
-            style={styles.last}
+          <AnimatedText
             lightColor="rgba(0,0,0,0.8)"
             darkColor="rgba(255,255,255,0.8)"
+            value={parseFloat(last)}
           >
             {last}
-          </Text>
+          </AnimatedText>
           <Text
             style={styles.highestBid}
             lightColor="rgba(0,0,0,0.8)"
@@ -95,9 +95,6 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   name: {
-    fontSize: 17,
-  },
-  last: {
     fontSize: 17,
   },
   highestBid: {

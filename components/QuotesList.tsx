@@ -10,6 +10,7 @@ import { Quotes } from "../redux/ducks/quotes/types";
 import QuoteView from "./QuoteView";
 import QuoteListHeader from "./QuoteListHeader";
 import QuoteListError from "./QuoteListError";
+import { timeoutRequest } from "../constants";
 
 export default function QuotesList(): ReactElement {
   const quotes = useSelector((state: AppState) => state.quotes.quotes);
@@ -21,7 +22,7 @@ export default function QuotesList(): ReactElement {
     React.useCallback(() => {
       const id = setInterval(() => {
         dispatch(getQuotes());
-      }, 10000);
+      }, timeoutRequest);
       return () => {
         clearInterval(id);
       };
